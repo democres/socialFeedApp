@@ -24,7 +24,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@johndoe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRb-d4-Lzs">
-                                            <rect key="frame" x="107" y="28" width="250" height="15"/>
+                                            <rect key="frame" x="104" y="28" width="250" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="tHY-Az-5Ye"/>
                                             </constraints>
@@ -33,7 +33,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Doe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sjv-m5-9Rg">
-                                            <rect key="frame" x="108" y="48" width="250" height="15"/>
+                                            <rect key="frame" x="105" y="48" width="250" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="w6s-iI-qJl"/>
                                             </constraints>
@@ -42,15 +42,15 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icloud.and.arrow.down.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SyR-rF-hXQ">
-                                            <rect key="frame" x="20" y="11" width="80" height="80"/>
+                                            <rect key="frame" x="20" y="14" width="74" height="74"/>
                                             <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="80" id="I7T-At-uL5"/>
-                                                <constraint firstAttribute="height" constant="79" id="piy-Y2-wjL"/>
+                                                <constraint firstAttribute="width" constant="74" id="I7T-At-uL5"/>
+                                                <constraint firstAttribute="height" constant="73" id="piy-Y2-wjL"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="40"/>
+                                                    <integer key="value" value="37"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
@@ -68,7 +68,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="76" id="V7V-VD-ZYk"/>
                                             </constraints>
-                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                            <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
                                             <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -90,7 +90,7 @@
                                     <constraints>
                                         <constraint firstItem="yAR-Ju-Xfg" firstAttribute="centerY" secondItem="SyR-rF-hXQ" secondAttribute="centerY" constant="-1" id="32B-pJ-pau"/>
                                         <constraint firstItem="WWM-pw-8x8" firstAttribute="leading" secondItem="g0j-hX-9if" secondAttribute="leadingMargin" id="FCh-kc-Dd8"/>
-                                        <constraint firstItem="SyR-rF-hXQ" firstAttribute="top" secondItem="g0j-hX-9if" secondAttribute="topMargin" id="HNh-Si-FdR"/>
+                                        <constraint firstItem="SyR-rF-hXQ" firstAttribute="top" secondItem="g0j-hX-9if" secondAttribute="topMargin" constant="3" id="HNh-Si-FdR"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="FgT-KG-M6o" secondAttribute="trailing" constant="10" id="JPd-mi-ZlY"/>
                                         <constraint firstItem="Ikf-FH-Zku" firstAttribute="leading" secondItem="g0j-hX-9if" secondAttribute="leading" id="PBa-1j-k5b"/>
                                         <constraint firstItem="FgT-KG-M6o" firstAttribute="bottom" secondItem="g0j-hX-9if" secondAttribute="bottomMargin" id="VYj-hb-mFA"/>
@@ -100,14 +100,14 @@
                                         <constraint firstItem="FgT-KG-M6o" firstAttribute="top" secondItem="Ikf-FH-Zku" secondAttribute="bottom" constant="4" id="dcv-lX-hjJ"/>
                                         <constraint firstItem="SyR-rF-hXQ" firstAttribute="leading" secondItem="g0j-hX-9if" secondAttribute="leadingMargin" id="dkB-nH-ncO"/>
                                         <constraint firstItem="Ikf-FH-Zku" firstAttribute="top" secondItem="WWM-pw-8x8" secondAttribute="bottom" constant="4" id="dyU-ml-zTp"/>
-                                        <constraint firstItem="cRb-d4-Lzs" firstAttribute="leading" secondItem="SyR-rF-hXQ" secondAttribute="trailing" constant="7" id="eR9-tb-7Id"/>
+                                        <constraint firstItem="cRb-d4-Lzs" firstAttribute="leading" secondItem="SyR-rF-hXQ" secondAttribute="trailing" constant="10" id="eR9-tb-7Id"/>
                                         <constraint firstItem="cRb-d4-Lzs" firstAttribute="top" secondItem="g0j-hX-9if" secondAttribute="topMargin" constant="17" id="lI5-cg-AY4"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="WWM-pw-8x8" secondAttribute="trailing" id="m5R-n9-2ck"/>
-                                        <constraint firstItem="WWM-pw-8x8" firstAttribute="top" secondItem="SyR-rF-hXQ" secondAttribute="bottom" constant="8" id="mxk-QH-La3"/>
-                                        <constraint firstItem="sjv-m5-9Rg" firstAttribute="leading" secondItem="SyR-rF-hXQ" secondAttribute="trailing" constant="8" id="o7d-uG-yK2"/>
-                                        <constraint firstItem="yAR-Ju-Xfg" firstAttribute="leading" secondItem="sjv-m5-9Rg" secondAttribute="trailing" constant="4" id="oDZ-N5-fZI"/>
+                                        <constraint firstItem="WWM-pw-8x8" firstAttribute="top" secondItem="SyR-rF-hXQ" secondAttribute="bottom" constant="11" id="mxk-QH-La3"/>
+                                        <constraint firstItem="sjv-m5-9Rg" firstAttribute="leading" secondItem="SyR-rF-hXQ" secondAttribute="trailing" constant="11" id="o7d-uG-yK2"/>
+                                        <constraint firstItem="yAR-Ju-Xfg" firstAttribute="leading" secondItem="sjv-m5-9Rg" secondAttribute="trailing" constant="7" id="oDZ-N5-fZI"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="yAR-Ju-Xfg" secondAttribute="trailing" id="qON-nx-ok1"/>
-                                        <constraint firstItem="yAR-Ju-Xfg" firstAttribute="leading" secondItem="cRb-d4-Lzs" secondAttribute="trailing" constant="5" id="urC-II-jVZ"/>
+                                        <constraint firstItem="yAR-Ju-Xfg" firstAttribute="leading" secondItem="cRb-d4-Lzs" secondAttribute="trailing" constant="8" id="urC-II-jVZ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

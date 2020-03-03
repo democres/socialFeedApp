@@ -78,7 +78,9 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
         
         //TEXT INFO
         currentCell.dateLbl.text = post.date
-        currentCell.postTextView.text = post.text
+        if !(post.text?.isEmpty ?? true) {
+            currentCell.postTextView.text = post.text
+        }
         currentCell.authorNameLbl.text = post.author?.name
         currentCell.authorNickLbl.text = "@\(post.author?.account ?? "user459")"
         
