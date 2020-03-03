@@ -1,0 +1,6 @@
+framework module Pods_socialFeedApp {
+  umbrella header "Pods-socialFeedApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
