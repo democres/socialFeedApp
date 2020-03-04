@@ -28,9 +28,8 @@ final class HomeFeedPresenter: HomeFeedPresenterProtocol {
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] postArray in
                 self?.view.handlePresenterOutput(.showSocialPosts(postArray))
-        }, onError: { (error) in
-            print(error)
-            // HANDLE THE ERROR
+        }, onError: { [weak self] (error) in
+            self?.view.handlePresenterOutput(.showSocialPosts(self?.interactor.fetchLocalData() ?? [Post]()))
         })
         .disposed(by: disposeBag)
     }

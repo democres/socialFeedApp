@@ -20,22 +20,20 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
     
     
     // MARK: - Properties
-    internal var presenter: HomeFeedPresenterProtocol!
+    var presenter: HomeFeedPresenterProtocol!
+    
     private let disposeBag = DisposeBag()
     private var posts: Observable<[Post]>!
     
     private var postArray = [Post](){
         didSet{
             bindTableView()
-            self.tableView.reloadData()
         }
     }
     
-    lazy var rowHeights:[Int:CGFloat] = [:]
-    
+    var rowHeights:[Int:CGFloat] = [:]
     var currentIndex = 1
-    
-    var recentlyUpdated = false
+    var refreshingData = false
     
     // MARK: - Lifecycle
 
@@ -61,21 +59,14 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         
-        
         presenter.showSocialPosts(index: currentIndex)
     }
     
     @objc func refresh(sender:AnyObject){
-        // Updating your data here...
-        if currentIndex > 1 {
-            currentIndex -= 1
-            let indexPath = IndexPath(row: postArray.count - 1, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-            self.recentlyUpdated = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                self.recentlyUpdated = false
-            }
-        }
+        currentIndex = 1
+        self.refreshingData = true
+        self.rowHeights.removeAll()
+        self.postArray.removeAll()
         presenter.showSocialPosts(index: currentIndex)
     }
     
@@ -87,7 +78,8 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
             if let currentCell = cell as? HomeFeedTableViewCell {
                 self?.setupCell(currentCell: currentCell, post: post, row: row)
             }
-        }.disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
+        
     }
     
     func setupCell(currentCell: HomeFeedTableViewCell, post: Post, row: Int){
@@ -136,8 +128,8 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
                 .transition(.fade(5)),
                 .cacheOriginalImage
             ])
-        {
-            result in
+        { result in
+            
             switch result {
             case .success(let value):
                 
@@ -156,7 +148,7 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
                 currentCell.postImageHeight.constant = 125
             }
         }
-
+        
     }
     
     
@@ -179,12 +171,10 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
         
         guard self.postArray.count > 5 else { return }
 
-        if indexPath.row == self.postArray.count - 1 && !NVActivityIndicatorPresenter.sharedInstance.isAnimating && !self.recentlyUpdated{
+        if indexPath.row == self.postArray.count - 4 {
             currentIndex += 1
             presenter.showSocialPosts(index: currentIndex)
-            NVActivityIndicatorPresenter.sharedInstance.startAnimating(ActivityData())
             let indexPath = IndexPath(row: 1, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
         }
         
         
@@ -194,12 +184,12 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
     func handlePresenterOutput(_ output: HomeFeedPresenterOutput) {
         switch output {
         case .showSocialPosts(let postArray):
-            self.postArray = postArray
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if self.refreshingData {
+                self.postArray = postArray
                 self.tableView.reloadData()
-                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-                self.refreshControl?.endRefreshing()
+                self.refreshingData = false
             }
+            self.postArray += postArray
         }
     }
     

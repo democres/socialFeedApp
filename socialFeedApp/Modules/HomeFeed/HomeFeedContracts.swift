@@ -18,6 +18,7 @@ protocol HomeFeedViewProtocol: class {
 protocol HomeFeedInteractorProtocol: class {
     var interactorOutputDelegate: HomeFeedInteractorDelegate? { get set }
     func getSocialPosts(index: Int) -> Observable<[Post]>
+    func fetchLocalData() -> [Post]
 }
 
 protocol HomeFeedInteractorDelegate: class {
