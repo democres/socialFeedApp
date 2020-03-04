@@ -19,6 +19,7 @@ class HomeFeedTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var postImage: UIImageView!
     
+    @IBOutlet weak var postImageHeight: NSLayoutConstraint!
     
     // MARK: - init
     required init?(coder: NSCoder) {

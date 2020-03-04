@@ -97,18 +97,28 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
             options: [
                 .processor(processor),
                 .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
+                .transition(.fade(5)),
                 .cacheOriginalImage
             ])
         {
             result in
             switch result {
             case .success(let value):
+                
                 let aspectRatio = size.width/size.height
-                let imageHeight = self.view.frame.width * aspectRatio
-                self.rowHeights[row] = imageHeight
+                
+                let imageSize = (currentCell.postImage.frame.size.width) / (currentCell.postImage.image?.size.width ?? 32) * (currentCell.postImage.image?.size.height ?? 32)
+                
+                currentCell.postImageHeight.constant = imageSize
+                
+                self.rowHeights[row] = (imageSize + (100/aspectRatio)) * aspectRatio
+                if aspectRatio == 1 {
+                    self.rowHeights[row]! += (currentCell.postImage.image?.size.width ?? 100) - (100/aspectRatio)
+                }
+                
             case .failure(let error):
                 self.rowHeights[row] = 333
+                currentCell.postImageHeight.constant = 125
             }
         }
 
