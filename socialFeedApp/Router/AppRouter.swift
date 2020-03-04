@@ -15,7 +15,7 @@ final class AppRouter {
     func launchHomeFeed(){
         let viewController = HomeFeedBuilder.make()
         let navigationController = UINavigationController(rootViewController: viewController)
-        window?.rootViewController = viewController
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 

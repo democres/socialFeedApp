@@ -23,8 +23,8 @@ final class HomeFeedPresenter: HomeFeedPresenterProtocol {
     }
     
     
-    func showSocialPosts() {
-        interactor.getSocialPosts()
+    func showSocialPosts(index: Int) {
+        interactor.getSocialPosts(index: index)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] postArray in
                 self?.view.handlePresenterOutput(.showSocialPosts(postArray))
@@ -33,7 +33,6 @@ final class HomeFeedPresenter: HomeFeedPresenterProtocol {
             // HANDLE THE ERROR
         })
         .disposed(by: disposeBag)
-        
     }
     
 }

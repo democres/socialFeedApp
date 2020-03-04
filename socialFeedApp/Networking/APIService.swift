@@ -9,15 +9,15 @@
 import Moya
 
 enum APIService {
-    case getSocialMediaPosts
+    case getSocialMediaPosts(index: Int)
 }
 
 extension APIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .getSocialMediaPosts:
-            return URL(string: "https://storage.googleapis.com/cdn-og-test-api/test-task/social/4.json")!
+        case .getSocialMediaPosts(let index):
+            return URL(string: "https://storage.googleapis.com/cdn-og-test-api/test-task/social/\(String(index)).json")!
         }
     }
     

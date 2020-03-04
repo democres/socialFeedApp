@@ -17,9 +17,9 @@ class HomeFeedInteractor: HomeFeedInteractorProtocol{
         
     let moyaProvider = MoyaProvider<APIService>(plugins: [NetworkLoggerPlugin()])
     
-    func getSocialPosts() -> Observable<[Post]>{
+    func getSocialPosts(index: Int) -> Observable<[Post]>{
                 
-        return moyaProvider.rx.request(.getSocialMediaPosts)
+        return moyaProvider.rx.request(.getSocialMediaPosts(index: index))
                 .debug()
                 .filterSuccessfulStatusCodes()
                 .asObservable()

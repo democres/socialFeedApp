@@ -11,6 +11,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Kingfisher
+import NVActivityIndicatorView
 
 class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
     
@@ -26,32 +27,67 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
     private var postArray = [Post](){
         didSet{
             bindTableView()
+            self.tableView.reloadData()
         }
     }
     
-     var rowHeights:[Int:CGFloat] = [:]
+    lazy var rowHeights:[Int:CGFloat] = [:]
+    
+    var currentIndex = 1
+    
+    var recentlyUpdated = false
     
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Home Feed"
+        
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(ActivityData())
         configureView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.tableView.reloadData()
+            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        }
+    }
+    
+    
+    
     // MARK: - Helpers
     func configureView(){
-        tableView.dataSource = nil
-        presenter.showSocialPosts()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        
+        
+        presenter.showSocialPosts(index: currentIndex)
     }
+    
+    @objc func refresh(sender:AnyObject){
+        // Updating your data here...
+        if currentIndex > 1 {
+            currentIndex -= 1
+            let indexPath = IndexPath(row: postArray.count - 1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            self.recentlyUpdated = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self.recentlyUpdated = false
+            }
+        }
+        presenter.showSocialPosts(index: currentIndex)
+    }
+    
 
     func bindTableView(){
-        self.tableView.reloadData()
+        tableView.dataSource = nil
         self.posts = Observable.just(postArray)
-        self.posts.bind(to: tableView.rx.items(cellIdentifier: "HomeFeedCell")) { (row, post, cell) in
+        self.posts.bind(to: tableView.rx.items(cellIdentifier: "HomeFeedCell")) {[weak self] (row, post, cell) in
             if let currentCell = cell as? HomeFeedTableViewCell {
-                self.setupCell(currentCell: currentCell, post: post, row: row)
+                self?.setupCell(currentCell: currentCell, post: post, row: row)
             }
-        }.addDisposableTo(disposeBag)
+        }.disposed(by: disposeBag)
     }
     
     func setupCell(currentCell: HomeFeedTableViewCell, post: Post, row: Int){
@@ -115,7 +151,6 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
                 if aspectRatio == 1 {
                     self.rowHeights[row]! += (currentCell.postImage.image?.size.width ?? 100) - (100/aspectRatio)
                 }
-                
             case .failure(let error):
                 self.rowHeights[row] = 333
                 currentCell.postImageHeight.constant = 125
@@ -125,27 +160,48 @@ class HomeFeedViewController: UITableViewController, HomeFeedViewProtocol{
     }
     
     
-    
-    // MARK: - Handle Presenter Output
-    func handlePresenterOutput(_ output: HomeFeedPresenterOutput) {
-        switch output {
-        case .showSocialPosts(let postArray):
-            self.postArray = postArray
-        }
-    }
-    
     // MARK: - TableView Delegates
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
+        guard let url = URL(string: self.postArray[indexPath.row].link ?? "https://google.com") else { return }
+        UIApplication.shared.open(url)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let height = self.rowHeights[indexPath.row]{
             return height
-        }else{
+        } else {
             return 333
         }
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard self.postArray.count > 5 else { return }
+
+        if indexPath.row == self.postArray.count - 1 && !NVActivityIndicatorPresenter.sharedInstance.isAnimating && !self.recentlyUpdated{
+            currentIndex += 1
+            presenter.showSocialPosts(index: currentIndex)
+            NVActivityIndicatorPresenter.sharedInstance.startAnimating(ActivityData())
+            let indexPath = IndexPath(row: 1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+        }
+        
+        
+    }
+
+    // MARK: - Handle Presenter Output
+    func handlePresenterOutput(_ output: HomeFeedPresenterOutput) {
+        switch output {
+        case .showSocialPosts(let postArray):
+            self.postArray = postArray
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.tableView.reloadData()
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                self.refreshControl?.endRefreshing()
+            }
+        }
+    }
+    
     
 }

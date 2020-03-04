@@ -17,7 +17,7 @@ protocol HomeFeedViewProtocol: class {
 // MARK: - Interactor
 protocol HomeFeedInteractorProtocol: class {
     var interactorOutputDelegate: HomeFeedInteractorDelegate? { get set }
-    func getSocialPosts() -> Observable<[Post]>
+    func getSocialPosts(index: Int) -> Observable<[Post]>
 }
 
 protocol HomeFeedInteractorDelegate: class {
@@ -30,7 +30,7 @@ enum HomeFeedInteractorOutput {
 
 // MARK: - Presenter
 protocol HomeFeedPresenterProtocol: class {
-    func showSocialPosts()
+    func showSocialPosts(index: Int)
 }
 
 enum HomeFeedPresenterOutput {

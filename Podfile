@@ -11,6 +11,7 @@ target 'socialFeedApp' do
   pod 'Kingfisher'
   pod 'RealmSwift'
   pod 'RxCocoa'
+  pod 'NVActivityIndicatorView'
 
   target 'socialFeedAppTests' do
     inherit! :search_paths
